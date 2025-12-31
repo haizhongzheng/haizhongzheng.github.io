@@ -17,6 +17,10 @@ nav_order: 2
 
 <div class="publications">
 
-{% bibliography %}
+<h2>Preprint</h2>
+{% bibliography --query @*[abbr=Preprint]* %}
+
+<h2>Conference</h2>
+{% bibliography --query @inproceedings* %}
 
 </div>
