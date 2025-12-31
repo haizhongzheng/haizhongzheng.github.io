@@ -1,12 +1,16 @@
 ---
 layout: page
 permalink: /teaching/
-title: teaching
-description: Materials for courses you taught. Replace this text with your description.
+title: Teaching
+description: Teaching experience and courses taught.
 nav: true
 nav_order: 6
 ---
 
-For now, this page is assumed to be a static description of your courses. You can convert it to a collection similar to `_projects/` so that you can have a dedicated page for each course.
+## Teaching Experience
 
-Organize your courses by years, topics, or universities, however you like!
+**Co-Lead Instructor** in EECS 598-012 (Machine Learning Security and Privacy)
+University of Michigan, Winter 2023
+
+**Graduate Student Instructor** in EECS 281 (Data Structures and Algorithms)
+University of Michigan, Fall 2021
