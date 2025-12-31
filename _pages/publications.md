@@ -19,6 +19,7 @@ nav_order: 2
 
 <h2>Preprint</h2>
 {% bibliography --query @*[abbr=Preprint]* %}
+{% bibliography --query @*[abbr=NeurIPS Workshop]* %}
 
 <h2>Conference</h2>
 {% bibliography --query @inproceedings* %}
