@@ -398,16 +398,20 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-a-simple-inline-announcement",
-          title: 'A simple inline announcement.',
+            },},{id: "news-two-papers-greso-and-kinetics-accepted-to-neurips-2025",
+          title: 'Two papers (GRESO and Kinetics) accepted to NeurIPS 2025.',
           description: "",
-          section: "News",},{id: "news-a-long-announcement-with-details",
-          title: 'A long announcement with details',
+          section: "News",},{id: "news-plato-accepted-to-colm-2025",
+          title: 'Plato accepted to COLM 2025.',
           description: "",
-          section: "News",handler: () => {
-              window.location.href = "/news/announcement_2/";
-            },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
-          title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
+          section: "News",},{id: "news-gave-an-invited-talk-at-amazon-sf-ai-lab",
+          title: 'Gave an invited talk at Amazon SF AI Lab.',
+          description: "",
+          section: "News",},{id: "news-wave-accepted-to-asplos-2026",
+          title: 'WAVE accepted to ASPLOS 2026.',
+          description: "",
+          section: "News",},{id: "news-rlboost-accepted-to-nsdi-2026",
+          title: 'RLBoost accepted to NSDI 2026.',
           description: "",
           section: "News",},{id: "projects-project-1",
           title: 'project 1',
