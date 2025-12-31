@@ -41,26 +41,29 @@ layout: default
     {% if page.announcements and page.announcements.enabled %}
       <hr style="border-color: #ccc; border-width: 1px;">
       <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
+        <a href="{{ '/news/' | relative_url }}" style="color: inherit">News</a>
       </h2>
       {% include news.liquid limit=true %}
     {% endif %}
 
     <!-- Latest posts -->
+    {% comment %}
     {% if page.latest_posts and page.latest_posts.enabled %}
       <hr style="border-color: #ccc; border-width: 1px;">
       <h2>
-        <a href="{{ '/blog/' | relative_url }}" style="color: inherit">latest posts</a>
+        <a href="{{ '/blog/' | relative_url }}" style="color: inherit">Latest posts</a>
       </h2>
       {% include latest_posts.liquid %}
     {% endif %}
+    {% endcomment %}
 
     <!-- Selected papers -->
     {% if page.selected_papers %}
       <hr style="border-color: #ccc; border-width: 1px;">
       <h2>
-        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
+        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">Selected Publications</a>
       </h2>
+      <p style="font-size: 0.9rem; color: #666; margin-top: -0.5rem; margin-bottom: 1rem;">* indicates equal contribution.</p>
       {% include selected_papers.liquid %}
     {% endif %}
 

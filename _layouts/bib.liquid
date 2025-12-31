@@ -53,13 +53,9 @@
     <div class="author">
       {% assign author_array_size = entry.author_array | size %}
 
-      {% assign author_array_limit = author_array_size %}
-      {% if site.max_author_limit and author_array_size > site.max_author_limit %}
-        {% assign author_array_limit = site.max_author_limit %}
-      {% endif %}
-
-      {%- for author in entry.author_array limit: author_array_limit -%}
+      {%- for author in entry.author_array -%}
         {% assign author_is_self = false %}
+        {% assign is_cofirst = false %}
         {%- assign author_last_name = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
         {%- assign author_last_html = author.last | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
         {% if site.scholar.last_name contains author_last_name %}
@@ -67,6 +63,18 @@
             {% assign author_is_self = true %}
           {% endif %}
         {%- endif -%}
+        {% if entry.equal_contributor %}
+          {% assign author_position = forloop.index %}
+          {% assign equal_contributors_str = entry.equal_contributor | strip %}
+          {% assign equal_contributors_list = equal_contributors_str | split: ',' %}
+          {% for pos in equal_contributors_list %}
+            {% assign pos_clean = pos | strip | plus: 0 %}
+            {% if pos_clean == author_position %}
+              {% assign is_cofirst = true %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+        {% endif %}
         {% assign coauthor_url = null %}
         {%- assign clean_last_name = author_last_name | downcase | remove_accents -%}
         {% if site.data.coauthors[clean_last_name] %}
@@ -82,60 +90,25 @@
           {% if forloop.first == false -%}
             {%- if forloop.length > 2 %}, {% elsif forloop.length == 2 %}  {% endif %}
           {%- endif %}
-          {%- if forloop.last and author_array_limit == author_array_size %}and {% endif -%}
+          {%- if forloop.last %}and {% endif -%}
         {% endif %}
         {%- if author_is_self -%}
-          <em>
+          <strong>
             {{- author.first }}
-            {{ author_last_html -}}
-          </em>
+            {{ author_last_html -}}{% if is_cofirst %}*{% endif %}
+          </strong>
         {%- else -%}
           {%- if coauthor_url -%}
             <a href="{{ coauthor_url }}">
               {{- author.first }}
-              {{ author_last_html -}}
+              {{ author_last_html -}}{% if is_cofirst %}*{% endif %}
             </a>
           {%- else -%}
             {{- author.first }}
-            {{ author_last_html -}}
+            {{ author_last_html -}}{% if is_cofirst %}*{% endif %}
           {% endif %}
         {%- endif -%}
       {% endfor %}
-      {%- assign more_authors = author_array_size | minus: author_array_limit -%}
-
-      {%- assign more_authors_hide = more_authors | append: ' more author' -%}
-      {% if more_authors > 0 %}
-        {%- if more_authors > 1 -%}
-          {% assign more_authors_hide = more_authors_hide | append: 's' %}
-        {%- endif -%}
-        {% assign more_authors_show = '' %}
-        {%- for author in entry.author_array offset: author_array_limit -%}
-          {% assign more_authors_show = more_authors_show | append: author.first | append: ' ' | append: author.last %}
-          {% unless forloop.last %}
-            {% assign more_authors_show = more_authors_show | append: ', ' %}
-          {% endunless %}
-        {%- endfor -%}
-        {%- assign more_authors_show = more_authors_show | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
-        , and
-        <span
-          class="more-authors"
-          title="click to view {{ more_authors_hide }}"
-          onclick="
-              var element = $(this);
-              element.attr('title', '');
-              var more_authors_text = element.text() == '{{ more_authors_hide }}' ? '{{ more_authors_show }}' : '{{ more_authors_hide }}';
-              var cursorPosition = 0;
-              var textAdder = setInterval(function(){
-                element.html(more_authors_text.substring(0, cursorPosition + 1));
-                if (++cursorPosition == more_authors_text.length){
-                  clearInterval(textAdder);
-                }
-            }, '{{ site.more_authors_animation_delay }}');
-          "
-        >
-          {{- more_authors_hide -}}
-        </span>
-      {% endif %}
       {% if entry.annotation %}
         <i
           class="fa-solid fa-circle-info ml-1"
@@ -152,9 +125,17 @@
     {% assign proceedings = 'inproceedings,incollection' | split: ',' %}
     {% assign thesis = 'thesis,mastersthesis,phdthesis' | split: ',' %}
     {% if entry.type == 'article' %}
-      {% capture entrytype %}<em>{{ entry.journal }}</em>{% endcapture %}
+      {% if entry.abbr %}
+        {% capture entrytype %}<strong>{{ entry.abbr }}</strong>{% endcapture %}
+      {% else %}
+        {% capture entrytype %}<em>{{ entry.journal }}</em>{% endcapture %}
+      {% endif %}
     {% elsif proceedings contains entry.type %}
-      {% capture entrytype %}<em>In {{ entry.booktitle }}</em>{% endcapture %}
+      {% if entry.abbr %}
+        {% capture entrytype %}<strong>{{ entry.abbr }}</strong>{% endcapture %}
+      {% else %}
+        {% capture entrytype %}<em>{{ entry.booktitle }}</em>{% endcapture %}
+      {% endif %}
     {% elsif thesis contains entry.type %}
       {% capture entrytype %}<em>{{ entry.school }}</em>{% endcapture %}
     {% else %}
@@ -164,7 +145,7 @@
       {% capture entrymonth %}{{ " " }}{{ entry.month | capitalize }}{% endcapture %}
     {% endif %}
     {% if entry.year %}
-      {% capture entryyear %}{{ " " }}{{ entry.year }}{% endcapture %}
+      {% capture entryyear %}{{ " " }}<strong>{{ entry.year }}</strong>{% endcapture %}
     {% endif %}
     {% if entry.location %}
       {% capture entrytype %}{{ entrytype }}{{ ", " }}{{ entry.location }}{% endcapture %}
@@ -177,13 +158,20 @@
       {% include hook/bib.liquid %}
     {% endif %}
     {% assign entrytype_text = entrytype | strip_html | strip %}
-    {% capture periodical %}{{ entrytype }}{% if entrytype_text != "" and entryyear != "" %}, {% endif %}{{ entrymonth }}{{ entryyear }}{% endcapture %}
+    {% assign note_text = entry.note | strip | downcase %}
+    {% assign show_note_inline = false %}
+    {% if note_text contains 'oral' or note_text contains 'spotlight' %}
+      {% assign show_note_inline = true %}
+    {% endif %}
+    {% capture periodical %}{{ entrytype }}{% if entrytype_text != "" and entryyear != "" %} {% endif %}{{ entrymonth }}{{ entryyear }}{% if show_note_inline %}, <span style="color: red;">{{ entry.note | strip }}</span>{% endif %}{% endcapture %}
     <div class="periodical">
       {{ periodical | strip }}
     </div>
+    {% unless show_note_inline %}
     <div class="periodical">
       {{ entry.note | strip }}
     </div>
+    {% endunless %}
 
     <!-- Links/Buttons -->
     <div class="links">

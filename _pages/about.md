@@ -30,6 +30,6 @@ work_experience: |
   May 2021 - Aug. 2021
 ---
 
-I am a postdoctoral researcher at InfiniAI Lab advised by Prof. Beidi Chen at Carnegie Mellon University. I am also a member of Catalyst Group at CMU. I received my Ph.D. degree from University of Michigan and was advised by Prof. Atul Prakash. Before that, I obtained my B.S. and M.S. degree from Shanghai Jiao Tong University, where I was advised by Prof. Haojin Zhu.
+I am a postdoctoral researcher at [InfiniAI Lab](https://www.infini-ai-lab.cmu.edu/) advised by [Prof. Beidi Chen](https://www.andrew.cmu.edu/user/beidic/) at [Carnegie Mellon University](https://www.cmu.edu/). I am also a member of [Catalyst Group](https://catalyst.cs.cmu.edu/) at [CMU](https://www.cmu.edu/). I received my Ph.D. degree from [University of Michigan](https://umich.edu/) and was advised by [Prof. Atul Prakash](https://web.eecs.umich.edu/~aprakash/). Before that, I obtained my B.S. and M.S. degree from [Shanghai Jiao Tong University](https://www.sjtu.edu.cn/), where I was advised by [Prof. Haojin Zhu](https://nsec.sjtu.edu.cn/~hjzhu/).
 
 **Research Interests:** Efficient RL for LLMs; ML system; Agent; ML Security.
