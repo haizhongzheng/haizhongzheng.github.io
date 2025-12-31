@@ -16,14 +16,14 @@ layout: default
         <p class="desc">{{ page.subtitle }}</p>
       </div>
       {% if page.profile and page.profile.image %}
-        <div style="flex-shrink: 0; align-self: flex-start; margin-left: 1rem;">
+        <div style="flex-shrink: 0; align-self: flex-start; margin-left: 1rem; min-width: 150px; max-width: 250px;">
           {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
           {% if page.profile.image_circular %}
             {% assign profile_image_class = 'img-fluid z-depth-1 rounded-circle' %}
           {% else %}
             {% assign profile_image_class = 'img-fluid z-depth-1 rounded' %}
           {% endif %}
-          {% capture sizes %}(min-width: {{ site.max_width }}) 120px, (min-width: 576px) 100px, 80px"{% endcapture %}
+          {% capture sizes %}(min-width: {{ site.max_width }}) 250px, (min-width: 576px) 200px, 150px"{% endcapture %}
           {%
             include figure.liquid loading="eager" path=profile_image_path class=profile_image_class sizes=sizes alt=page.profile.image
             cache_bust=true
