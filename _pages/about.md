@@ -2,7 +2,7 @@
 layout: about
 title: About
 permalink: /
-subtitle: "Postdoctoral Researcher<br>Electrical and Computer Engineering<br>Carnegie Mellon University<br>Ph.D. @ UMich<br>Email: haizhonz@andrew.cmu.edu"
+subtitle: "Postdoctoral Researcher @ CMU<br>Ph.D. @ UMich<br>Email: haizhonz@andrew.cmu.edu"
 
 profile:
   align: right
