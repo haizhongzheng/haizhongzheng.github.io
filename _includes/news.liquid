@@ -1,19 +1,14 @@
 <div class="news">
   {% if site.news != blank %}
     {% assign news_size = site.news | size %}
-    <div
-      class="table-responsive"
-      {% if include.limit and page.announcements.scrollable and news_size > 3 %}
-        style="max-height: 60vw"
-      {% endif %}
-    >
+    {% assign news = site.news | reverse %}
+    {% if include.limit and page.announcements.limit %}
+      {% assign news_limit = page.announcements.limit %}
+    {% else %}
+      {% assign news_limit = news_size %}
+    {% endif %}
+    <div class="table-responsive">
       <table class="table table-sm table-borderless">
-        {% assign news = site.news | reverse %}
-        {% if include.limit and page.announcements.limit %}
-          {% assign news_limit = page.announcements.limit %}
-        {% else %}
-          {% assign news_limit = news_size %}
-        {% endif %}
         {% for item in news limit: news_limit %}
           <tr>
             <th scope="row" style="width: 20%">{{ item.date | date: '%b %Y' }}</th>
@@ -26,8 +21,32 @@
             </td>
           </tr>
         {% endfor %}
+        {% if news_size > news_limit %}
+          {% for item in news offset: news_limit %}
+            <tr class="news-hidden" style="display: none;">
+              <th scope="row" style="width: 20%">{{ item.date | date: '%b %Y' }}</th>
+              <td>
+                {% if item.inline %}
+                  {{ item.content | remove: '<p>' | remove: '</p>' | emojify }}
+                {% else %}
+                  <a class="news-title" href="{{ item.url | relative_url }}">{{ item.title }}</a>
+                {% endif %}
+              </td>
+            </tr>
+          {% endfor %}
+        {% endif %}
       </table>
     </div>
+    {% if news_size > news_limit %}
+      <div class="text-center mt-1">
+        <button class="btn btn-sm btn-outline-primary" id="news-show-more" onclick="document.querySelectorAll('.news-hidden').forEach(el => el.style.display = ''); this.style.display = 'none'; document.getElementById('news-show-less').style.display = '';">
+          Show more
+        </button>
+        <button class="btn btn-sm btn-outline-primary" id="news-show-less" style="display: none;" onclick="document.querySelectorAll('.news-hidden').forEach(el => el.style.display = 'none'); this.style.display = 'none'; document.getElementById('news-show-more').style.display = '';">
+          Show less
+        </button>
+      </div>
+    {% endif %}
   {% else %}
     <p>No news so far...</p>
   {% endif %}
