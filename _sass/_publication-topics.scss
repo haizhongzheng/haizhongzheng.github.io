@@ -1,0 +1,81 @@
+.publications--topics {
+  .publication-topic {
+    --topic-color: #505b6b;
+    --topic-bg: rgba(80, 91, 107, 0.07);
+    --topic-border: rgba(80, 91, 107, 0.2);
+    color: var(--topic-color);
+    background: var(--topic-bg);
+    border: 1px solid var(--topic-border);
+    border-radius: 0.3rem;
+    line-height: 1.4;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.18rem 0.55rem;
+    letter-spacing: 0.01em;
+  }
+
+  .publication-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.4rem 0 0.45rem;
+  }
+
+  .publication-topics--venue {
+    gap: 0.25rem;
+    margin: 0 0 0.4rem;
+
+    .publication-topic {
+      font-size: 0.75rem;
+      padding: 0.12rem 0.38rem;
+      max-width: 100%;
+    }
+  }
+
+  .topic-continual-learning {
+    --topic-color: #23706a;
+    --topic-bg: rgba(35, 112, 106, 0.07);
+    --topic-border: rgba(35, 112, 106, 0.2);
+  }
+  .topic-rl {
+    --topic-color: #6a4ca2;
+    --topic-bg: rgba(106, 76, 162, 0.07);
+    --topic-border: rgba(106, 76, 162, 0.2);
+  }
+  .topic-mlsys {
+    --topic-color: #345e96;
+    --topic-bg: rgba(52, 94, 150, 0.07);
+    --topic-border: rgba(52, 94, 150, 0.2);
+  }
+  .topic-efficiency {
+    --topic-color: #976313;
+    --topic-bg: rgba(151, 99, 19, 0.07);
+    --topic-border: rgba(151, 99, 19, 0.2);
+  }
+  .topic-data {
+    --topic-color: #4f7331;
+    --topic-bg: rgba(79, 115, 49, 0.07);
+    --topic-border: rgba(79, 115, 49, 0.2);
+  }
+  .topic-security-privacy {
+    --topic-color: #a0445c;
+    --topic-bg: rgba(160, 68, 92, 0.07);
+    --topic-border: rgba(160, 68, 92, 0.2);
+  }
+  .topic-ai-for-research {
+    --topic-color: #665b79;
+    --topic-bg: rgba(102, 91, 121, 0.07);
+    --topic-border: rgba(102, 91, 121, 0.2);
+  }
+  .topic-multimodal {
+    --topic-color: #367b91;
+    --topic-bg: rgba(54, 123, 145, 0.07);
+    --topic-border: rgba(54, 123, 145, 0.2);
+  }
+}
+
+html[data-theme="dark"] .publications--topics .publication-topic {
+  color: var(--global-text-color);
+  background: transparent;
+  border-color: var(--topic-color);
+}

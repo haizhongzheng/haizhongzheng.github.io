@@ -1,0 +1,16 @@
+continual-learning:
+  label: Continual Learning
+rl:
+  label: RL
+mlsys:
+  label: MLSys
+efficiency:
+  label: Efficiency
+data:
+  label: Data
+security-privacy:
+  label: Security & Privacy
+ai-for-research:
+  label: AI for Research
+multimodal:
+  label: Multimodal

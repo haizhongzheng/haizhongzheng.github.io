@@ -1,9 +1,7 @@
-<div class="publications">
+<div class="publications publications--topics">
+  <h2>Preprint</h2>
+  {% bibliography --group_by none --query @*[preprint=true]* %}
 
-<h2>Preprint</h2>
-{% bibliography --group_by none --query @*[preprint=true]* %}
-
-<h2>Conference</h2>
-{% bibliography --group_by none --query @inproceedings[selected=true]* %}
-
+  <h2>Conference</h2>
+  {% bibliography --group_by none --query @inproceedings[selected=true]* %}
 </div>

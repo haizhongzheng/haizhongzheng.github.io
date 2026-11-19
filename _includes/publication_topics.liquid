@@ -1,0 +1,12 @@
+{% if page.selected_papers and include.entry.topics %}
+  <div class="publication-topics{% if include.venue %} publication-topics--venue{% endif %}" aria-label="Research topics">
+    {% assign entry_topics = include.entry.topics | split: ',' %}
+    {% for topic_id in entry_topics %}
+      {% assign topic_id = topic_id | strip %}
+      {% assign topic = site.data.publication_topics[topic_id] %}
+      {% if topic %}
+        <span class="publication-topic topic-{{ topic_id }}">{{ topic.label | escape }}</span>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endif %}

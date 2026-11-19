@@ -1,6 +1,11 @@
 ---
 ---
-<div class="row">
+<div
+  class="row"
+  {% if page.selected_papers and entry.topics %}
+    data-publication-topics="{{ entry.topics | escape }}"
+  {% endif %}
+>
   {% if site.enable_publication_thumbnails %}
     <div class="col col-sm-2 abbr">
       {%- if entry.abbr -%}
@@ -16,15 +21,25 @@
             {% endif -%}
           >
             {% if site.data.venues[entry.abbr].url %}
-              <a href="{{ site.data.venues[entry.abbr].url }}">{{ entry.abbr }} {{ entry.year }}</a>
+              <a href="{{ site.data.venues[entry.abbr].url }}">
+                {{- entry.abbr }}
+                {{ entry.year -}}
+              </a>
             {% else %}
-              <div>{{- entry.abbr }}{{ entry.year -}}</div>
+              <div>
+                {{- entry.abbr -}}
+                {{- entry.year -}}
+              </div>
             {% endif %}
           </abbr>
         {% else %}
-          <abbr class="badge rounded w-100">{{ entry.abbr }} {{ entry.year }}</abbr>
+          <abbr class="badge rounded w-100">
+            {{- entry.abbr }}
+            {{ entry.year -}}
+          </abbr>
         {% endif %}
       {% endif %}
+      {% include publication_topics.liquid entry=entry venue=true %}
       {% if entry.preview %}
         {% if entry.preview contains '://' %}
           <img class="preview z-depth-1 rounded" src="{{ entry.preview }}">
@@ -52,6 +67,9 @@
       {%- if entry.title_note %}({{ entry.title_note }}) {% endif -%}
       {{- entry.title -}}
     </div>
+    {% unless site.enable_publication_thumbnails %}
+      {% include publication_topics.liquid entry=entry %}
+    {% endunless %}
     <!-- Author -->
     <div class="author">
       {% assign author_array_size = entry.author_array | size %}
@@ -121,17 +139,20 @@
         {%- if author_is_self -%}
           <strong>
             {{- author.first }}
-            {{ author_last_html -}}{% if is_cofirst %}*{% endif %}
+            {{ author_last_html -}}
+            {% if is_cofirst %}*{% endif %}
           </strong>
         {%- else -%}
           {%- if coauthor_url -%}
             <a href="{{ coauthor_url }}">
               {{- author.first }}
-              {{ author_last_html -}}{% if is_cofirst %}*{% endif %}
+              {{ author_last_html -}}
+              {% if is_cofirst %}*{% endif %}
             </a>
           {%- else -%}
             {{- author.first }}
-            {{ author_last_html -}}{% if is_cofirst %}*{% endif %}
+            {{ author_last_html -}}
+            {% if is_cofirst %}*{% endif %}
           {% endif %}
         {%- endif -%}
         {%- if author_hidden -%}</span>{%- endif -%}
@@ -171,13 +192,13 @@
       {% assign show_note_inline = true %}
     {% endif %}
     {% if show_note_inline %}
-    <div class="periodical">
-      <span style="color: red;">{{ entry.note | strip }}</span>
-    </div>
+      <div class="periodical">
+        <span style="color: red;">{{ entry.note | strip }}</span>
+      </div>
     {% elsif entry.note %}
-    <div class="periodical">
-      {{ entry.note | strip }}
-    </div>
+      <div class="periodical">
+        {{ entry.note | strip }}
+      </div>
     {% endif %}
 
     <!-- Links/Buttons -->
